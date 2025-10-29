@@ -2,12 +2,14 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { LumosEmbeddedApp } from './LumosEmbeddedApp';
 import AdminDashboard from './AdminDashboard';
+import FamilyHub from './FamilyHub';
+import FamilyHubAdmin from './FamilyHubAdmin';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
   Home, Settings, BookOpen, Users, ShoppingBag, Sparkles,
-  PlayCircle, Award, Heart, Brain, Smile, Star, ArrowRight
+  PlayCircle, Award, Heart, Brain, Smile, Star, ArrowRight, Crown
 } from 'lucide-react';
 
 /**
@@ -59,7 +61,7 @@ const HomePage = () => {
         </div>
 
         {/* Quick Links */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {/* Admin Dashboard */}
           <Card className="hover:shadow-xl transition-shadow cursor-pointer border-2 border-indigo-200" onClick={() => navigate('/admin')}>
             <CardHeader>
@@ -111,6 +113,37 @@ const HomePage = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <Smile className="w-4 h-4" /> Emotion Games
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Family Hub */}
+          <Card className="hover:shadow-xl transition-shadow cursor-pointer border-2 border-purple-200" onClick={() => navigate('/family-hub')}>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <Users className="w-8 h-8 text-purple-600" />
+                <Badge className="bg-purple-600 text-white">
+                  <Crown className="w-3 h-3 mr-1" />
+                  Premium
+                </Badge>
+              </div>
+              <CardTitle className="text-xl mt-3">Family Hub</CardTitle>
+              <CardDescription>Track your family's progress and manage subscriptions</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white">
+                Open Hub <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+              <div className="mt-4 space-y-2 text-sm text-gray-600">
+                <div className="flex items-center gap-2">
+                  <Users className="w-4 h-4" /> Family Profiles
+                </div>
+                <div className="flex items-center gap-2">
+                  <Star className="w-4 h-4" /> Guardian Tracking
+                </div>
+                <div className="flex items-center gap-2">
+                  <Award className="w-4 h-4" /> Progress Reports
                 </div>
               </div>
             </CardContent>
@@ -290,6 +323,8 @@ const MainApp = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/family-hub" element={<FamilyHub />} />
+          <Route path="/family-hub-admin" element={<FamilyHubAdmin />} />
           <Route path="/play" element={<div className="p-8 text-center"><h1 className="text-3xl font-bold">Game/Lesson Routes</h1><p className="text-gray-600 mt-2">Add your lesson components here</p></div>} />
           {/* Add more routes for your lessons, games, etc. */}
         </Routes>

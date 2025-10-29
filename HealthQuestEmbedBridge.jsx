@@ -78,6 +78,12 @@ export const HealthQuestEmbedProvider = ({ children }) => {
             photoURL: payload.photoURL || payload.avatar,
             token: payload.token,
             sessionId: payload.sessionId,
+            role: payload.role || payload.metadata?.role,
+            subscription: payload.subscription || payload.metadata?.subscription || {
+              active: false,
+              tier: 'free'
+            },
+            hasSubscription: payload.hasSubscription || payload.subscription?.active || false,
             metadata: payload.metadata || {}
           });
           setIsReady(true);
