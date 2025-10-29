@@ -1,0 +1,468 @@
+{
+    "quest_name": "MindfulBites",
+    "quest_description": "Learn to eat with awareness, notice hunger and fullness, and build a healthy relationship with food through mindful practices.",
+    "target_age_min": 6,
+    "target_age_max": 12,
+    "total_lessons": 100,
+    "total_xp": 5100,
+    "total_coins": 5100,
+    "pre_assessment": [
+        {
+            "number": 0,
+            "name": "Getting to Know Your Eating Habits",
+            "description": "Let's see how you feel about eating, noticing your body, and trying new food experiences.",
+            "lessonText": "Before we start our Mindful Bites Quest, let's learn about how you feel when you eat. There are no right or wrong answers—just what's true for you today. Be honest so your adventure fits you best!",
+            "quest": "MindfulBites",
+            "language": "en",
+            "forRole": "child",
+            "minAge": 6,
+            "maxAge": 12,
+            "xp_total": 50,
+            "coins_total": 50,
+            "lesson_url_en": "",
+            "lesson_url_es": "",
+            "is_assessment": true,
+            "assessment_type": "pre",
+            "track_score": true,
+            "scoring_scale": "4_point_likert",
+            "max_score": 30,
+            "shuffle_answers": false,
+            "questions": [
+                {
+                    "question": "I notice how food tastes, smells, or feels when I eat.",
+                    "options": [
+                        "Really agree",
+                        "A little agree",
+                        "Not sure",
+                        "Disagree"
+                    ]
+                },
+                {
+                    "question": "I can tell when I'm starting to get hungry.",
+                    "options": [
+                        "Really agree",
+                        "A little agree",
+                        "Not sure",
+                        "Disagree"
+                    ]
+                },
+                {
+                    "question": "I can tell when I'm starting to feel full.",
+                    "options": [
+                        "Really agree",
+                        "A little agree",
+                        "Not sure",
+                        "Disagree"
+                    ]
+                },
+                {
+                    "question": "I can slow down and pay attention while I eat.",
+                    "options": [
+                        "Really agree",
+                        "A little agree",
+                        "Not sure",
+                        "Disagree"
+                    ]
+                },
+                {
+                    "question": "I notice the colors or shapes of foods on my plate.",
+                    "options": [
+                        "Really agree",
+                        "A little agree",
+                        "Not sure",
+                        "Disagree"
+                    ]
+                },
+                {
+                    "question": "I have chances to try new foods or snacks.",
+                    "options": [
+                        "Really agree",
+                        "A little agree",
+                        "Not sure",
+                        "Disagree"
+                    ]
+                },
+                {
+                    "question": "I can eat without screens or distractions sometimes.",
+                    "options": [
+                        "Really agree",
+                        "A little agree",
+                        "Not sure",
+                        "Disagree"
+                    ]
+                },
+                {
+                    "question": "I believe food can make me feel good inside and out.",
+                    "options": [
+                        "Really agree",
+                        "A little agree",
+                        "Not sure",
+                        "Disagree"
+                    ]
+                },
+                {
+                    "question": "I want to learn more about how to enjoy my food.",
+                    "options": [
+                        "Really agree",
+                        "A little agree",
+                        "Not sure",
+                        "Disagree"
+                    ]
+                },
+                {
+                    "question": "I feel proud when I notice my body's hunger or fullness signals.",
+                    "options": [
+                        "Really agree",
+                        "A little agree",
+                        "Not sure",
+                        "Disagree"
+                    ]
+                }
+            ],
+            "score_mapping": {
+                "Really agree": 3,
+                "A little agree": 2,
+                "Not sure": 1,
+                "Disagree": 0
+            },
+            "keyTakeaways": "• Everyone eats in their own way. • These questions help us learn what feels easy or tricky for you now.",
+            "feedback": {
+                "high_score": {
+                    "threshold": 25,
+                    "message": "You already notice a lot about eating—this quest will help you explore even more mindful moments!"
+                },
+                "medium_score": {
+                    "threshold": 15,
+                    "message": "You're on your way—this quest will give you fun tools to notice tastes, hunger, and food feelings."
+                },
+                "low_score": {
+                    "threshold": 0,
+                    "message": "This is a great place to start! You'll learn simple ways to explore food with curiosity and care."
+                }
+            }
+        }
+    ],
+    "lessons": [
+        {
+            "number": 1,
+            "name": "What Is Mindful Eating?",
+            "description": "Discover what mindful eating means in simple words.",
+            "lessonText": "Mindful eating means paying close attention to your food. It's about noticing how it looks, smells, tastes, and how your body feels while you eat. You don't have to change what you eat—just notice it with curiosity!",
+            "quest": "MindfulBites",
+            "language": "en",
+            "forRole": "child",
+            "minAge": 6,
+            "maxAge": 12,
+            "xp_total": 50,
+            "coins_total": 50,
+            "lesson_url_en": "",
+            "lesson_url_es": "",
+            "questions": [
+                {
+                    "question": "What does mindful eating mean?",
+                    "type": "mcq",
+                    "options": [
+                        "Paying attention to your food with your senses",
+                        "Eating as fast as possible",
+                        "Only eating healthy foods",
+                        "Not talking while eating"
+                    ],
+                    "answer": 1,
+                    "rationale": "Mindful eating is about noticing food with your senses, not about speed or food rules."
+                },
+                {
+                    "question": "Which sense can you use when eating mindfully?",
+                    "type": "mcq",
+                    "options": [
+                        "Taste",
+                        "Sight",
+                        "Smell",
+                        "All of these"
+                    ],
+                    "answer": 4,
+                    "rationale": "Mindful eating uses all of your senses—sight, smell, touch, and taste."
+                },
+                {
+                    "question": "Mindful eating helps you…",
+                    "type": "mcq",
+                    "options": [
+                        "Enjoy food more",
+                        "Eat more quickly",
+                        "Ignore your food",
+                        "Skip meals"
+                    ],
+                    "answer": 1,
+                    "rationale": "Mindful eating helps you enjoy food more by noticing it closely."
+                },
+                {
+                    "question": "When you practice mindful eating, you…",
+                    "type": "mcq",
+                    "options": [
+                        "Pay attention to how your body feels",
+                        "Don't listen to your body",
+                        "Eat with no breaks",
+                        "Forget about your food"
+                    ],
+                    "answer": 1,
+                    "rationale": "Mindful eating is about noticing your body's signals and feelings."
+                },
+                {
+                    "question": "Which is an example of mindful eating?",
+                    "type": "mcq",
+                    "options": [
+                        "Counting how many bites your friend takes",
+                        "Noticing the crunch when you chew",
+                        "Eating while playing a video game",
+                        "Not tasting your food"
+                    ],
+                    "answer": 2,
+                    "rationale": "Noticing the crunch when you chew is an example of mindful eating."
+                }
+            ],
+            "keyTakeaways": "• Mindful eating means noticing food with your senses. • Paying attention helps you enjoy food more.",
+            "feedback": {
+                "high_score": {
+                    "threshold": 5,
+                    "message": "Awesome! You understand what mindful eating means."
+                },
+                "medium_score": {
+                    "threshold": 3,
+                    "message": "Good job! You're starting to see what mindful eating is about."
+                },
+                "low_score": {
+                    "threshold": 0,
+                    "message": "That's okay! You'll learn more about mindful eating as we go along."
+                }
+            }
+        }
+    ],
+    "post_assessment": [
+        {
+            "number": 101,
+            "name": "Reflecting on Your Eating Adventure",
+            "quest": "MindfulBites",
+            "description": "Think back on your mindful eating quest and notice what feels different now.",
+            "lessonText": "You've finished your Mindful Bites Quest! Now let's see what you notice about eating, hunger, and enjoying food. There are no right or wrong answers—just a chance to reflect on how things feel for you now.",
+            "language": "en",
+            "forRole": "child",
+            "minAge": 6,
+            "maxAge": 12,
+            "xp_total": 50,
+            "coins_total": 50,
+            "lesson_url_en": "",
+            "lesson_url_es": "",
+            "is_assessment": true,
+            "assessment_type": "post",
+            "track_score": true,
+            "scoring_scale": "4_point_likert",
+            "max_score": 30,
+            "shuffle_answers": false,
+            "questions": [
+                {
+                    "question": "I notice how food tastes, smells, or feels when I eat.",
+                    "options": [
+                        "Really agree",
+                        "A little agree",
+                        "Not sure",
+                        "Disagree"
+                    ]
+                },
+                {
+                    "question": "I can tell when I'm starting to get hungry.",
+                    "options": [
+                        "Really agree",
+                        "A little agree",
+                        "Not sure",
+                        "Disagree"
+                    ]
+                },
+                {
+                    "question": "I can tell when I'm starting to feel full.",
+                    "options": [
+                        "Really agree",
+                        "A little agree",
+                        "Not sure",
+                        "Disagree"
+                    ]
+                },
+                {
+                    "question": "I can slow down and pay attention while I eat.",
+                    "options": [
+                        "Really agree",
+                        "A little agree",
+                        "Not sure",
+                        "Disagree"
+                    ]
+                },
+                {
+                    "question": "I notice the colors or shapes of foods on my plate.",
+                    "options": [
+                        "Really agree",
+                        "A little agree",
+                        "Not sure",
+                        "Disagree"
+                    ]
+                },
+                {
+                    "question": "I have chances to try new foods or snacks.",
+                    "options": [
+                        "Really agree",
+                        "A little agree",
+                        "Not sure",
+                        "Disagree"
+                    ]
+                },
+                {
+                    "question": "I can eat without screens or distractions sometimes.",
+                    "options": [
+                        "Really agree",
+                        "A little agree",
+                        "Not sure",
+                        "Disagree"
+                    ]
+                },
+                {
+                    "question": "I believe food can make me feel good inside and out.",
+                    "options": [
+                        "Really agree",
+                        "A little agree",
+                        "Not sure",
+                        "Disagree"
+                    ]
+                },
+                {
+                    "question": "I want to keep noticing more about how to enjoy my food.",
+                    "options": [
+                        "Really agree",
+                        "A little agree",
+                        "Not sure",
+                        "Disagree"
+                    ]
+                },
+                {
+                    "question": "I feel proud when I listen to my body's hunger or fullness signals.",
+                    "options": [
+                        "Really agree",
+                        "A little agree",
+                        "Not sure",
+                        "Disagree"
+                    ]
+                }
+            ],
+            "score_mapping": {
+                "Really agree": 3,
+                "A little agree": 2,
+                "Not sure": 1,
+                "Disagree": 0
+            },
+            "keyTakeaways": "• Reflecting helps you see how much you've learned. • Every answer shows growth—you're building mindful eating skills for life.",
+            "feedback": {
+                "high_score": {
+                    "threshold": 25,
+                    "message": "Amazing! You've grown strong skills in noticing, slowing down, and enjoying food with curiosity."
+                },
+                "medium_score": {
+                    "threshold": 15,
+                    "message": "You've made great progress—you're noticing more and trying new mindful habits."
+                },
+                "low_score": {
+                    "threshold": 0,
+                    "message": "Every step counts—keep practicing your new mindful skills, and you'll keep growing!"
+                }
+            }
+        }
+    ],
+    "feedbackform": [
+        {
+            "number": 102,
+            "name": "Let's Reflect on Your Quest",
+            "quest": "MindfulBites",
+            "is_assessment": true,
+            "assessment_type": "reflection",
+            "track_score": false,
+            "response_log": true,
+            "allow_barrier_recheck": true,
+            "xp_total": 50,
+            "coins_total": 50,
+            "forRole": "child",
+            "minAge": 6,
+            "maxAge": 12,
+            "language": "en",
+            "lesson_title": "Let's Reflect on Your Quest",
+            "lesson_text": "You finished your quest! Let's think about what you liked, what was tricky, and what you want to keep doing.\n",
+            "questions": [
+                {
+                    "question": "Did you like this quest?",
+                    "options": [
+                        "Not at all",
+                        "A little",
+                        "Kind of",
+                        "A lot",
+                        "I loved it!"
+                    ],
+                    "answer": "",
+                    "score_mapping": {
+                        "Not at all": 1,
+                        "A little": 2,
+                        "Kind of": 3,
+                        "A lot": 4,
+                        "I loved it!": 5
+                    }
+                },
+                {
+                    "question": "What part of the quest was your favorite?",
+                    "options": [
+                        "Learning something new",
+                        "Helping Lumo",
+                        "Trying new activities",
+                        "Something else",
+                        "Not sure"
+                    ],
+                    "answer": ""
+                },
+                {
+                    "question": "What part felt a little tricky?",
+                    "options": [
+                        "Keeping up the habit",
+                        "Trying new activities",
+                        "Remembering what to do",
+                        "Nothing was tricky",
+                        "Not sure"
+                    ],
+                    "answer": ""
+                },
+                {
+                    "question": "Did Lumo help you feel supported?",
+                    "options": [
+                        "Yes, a lot",
+                        "A little",
+                        "Not really",
+                        "Not sure"
+                    ],
+                    "answer": ""
+                },
+                {
+                    "question": "Would you want to do another quest like this?",
+                    "options": [
+                        "Yes!",
+                        "Maybe",
+                        "Not really",
+                        "Not sure"
+                    ],
+                    "answer": ""
+                },
+                {
+                    "question": "What will you keep doing from this quest?",
+                    "options": [
+                        "Using kind self-talk",
+                        "Taking breaks or moving",
+                        "Noticing my feelings",
+                        "Not sure yet"
+                    ],
+                    "answer": ""
+                }
+            ],
+            "universal_message": "You did it! Lumo is proud of you. If you want more adventures, ask a grown-up to help you sign up for a family quest. This lets you do new quests, win bonus prizes, and keep growing your hero powers. You can also play this same quest again and buy coins to make Lumo even cooler!\n"
+        }
+    ]
+}
