@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LumosLand Test Harness - HealthQuest Simulator</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .controls {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .controls h2 {
+      margin-top: 0;
+      color: #667eea;
+    }
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: transform 0.2s;
+    }
+    button:hover {
+      transform: translateY(-2px);
+    }
+    .admin-btn {
+      background: #8b5cf6;
+      color: white;
+    }
+    .user-btn {
+      background: #10b981;
+      color: white;
+    }
+    .subscriber-btn {
+      background: #3b82f6;
+      color: white;
+    }
+    .ceo-btn {
+      background: #f59e0b;
+      color: white;
+    }
+    iframe {
+      width: 100%;
+      height: 800px;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      background: white;
+    }
+    .status {
+      background: #f0fdf4;
+      border: 2px solid #10b981;
+      padding: 10px;
+      border-radius: 6px;
+      margin-top: 10px;
+      color: #065f46;
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <h2>🧪 LumosLand Test Harness - HealthQuest Simulator</h2>
+    <p>This simulates HealthQuest sending authentication to the embedded LumosLand app.</p>
+
+    <div class="button-group">
+      <button class="admin-btn" onclick="sendAuth('admin')">
+        🔧 Login as Admin
+      </button>
+      <button class="user-btn" onclick="sendAuth('user')">
+        👤 Login as Regular User
+      </button>
+      <button class="subscriber-btn" onclick="sendAuth('subscriber')">
+        ⭐ Login as Subscriber
+      </button>
+      <button class="ceo-btn" onclick="sendAuth('ceo')">
+        👑 Login as CEO
+      </button>
+    </div>
+
+    <div id="status" class="status" style="display: none;"></div>
+  </div>
+
+  <iframe id="lumosFrame" src="http://localhost:5173/LumosLand/"></iframe>
+
+  <script>
+    const iframe = document.getElementById('lumosFrame');
+    const status = document.getElementById('status');
+
+    function sendAuth(userType) {
+      let authPayload = {
+        type: 'HEALTHQUEST_AUTH',
+        payload: {}
+      };
+
+      switch(userType) {
+        case 'admin':
+          authPayload.payload = {
+            userId: 'test-admin-001',
+            email: 'admin@healthquest.com',
+            displayName: 'Test Admin',
+            photoURL: 'https://api.dicebear.com/7.x/avataaars/svg?seed=admin',
+            token: 'test-token-admin-' + Date.now(),
+            sessionId: 'session-' + Date.now(),
+            role: 'admin',
+            subscription: {
+              active: true,
+              tier: 'premium',
+              startDate: new Date().toISOString(),
+              endDate: new Date(Date.now() + 365*24*60*60*1000).toISOString()
+            },
+            hasSubscription: true,
+            metadata: {
+              role: 'admin',
+              permissions: ['read', 'write', 'delete', 'admin']
+            }
+          };
+          break;
+
+        case 'subscriber':
+          authPayload.payload = {
+            userId: 'test-subscriber-001',
+            email: 'subscriber@healthquest.com',
+            displayName: 'Test Subscriber',
+            photoURL: 'https://api.dicebear.com/7.x/avataaars/svg?seed=subscriber',
+            token: 'test-token-subscriber-' + Date.now(),
+            sessionId: 'session-' + Date.now(),
+            role: 'user',
+            subscription: {
+              active: true,
+              tier: 'family',
+              startDate: new Date().toISOString(),
+              endDate: new Date(Date.now() + 30*24*60*60*1000).toISOString()
+            },
+            hasSubscription: true,
+            metadata: {
+              role: 'user',
+              permissions: ['read']
+            }
+          };
+          break;
+
+        case 'ceo':
+          authPayload.payload = {
+            userId: 'test-ceo-001',
+            email: 'ceo@healthquest.com',
+            displayName: 'CEO Test User',
+            photoURL: 'https://api.dicebear.com/7.x/avataaars/svg?seed=ceo',
+            token: 'test-token-ceo-' + Date.now(),
+            sessionId: 'session-' + Date.now(),
+            role: 'ceo',
+            subscription: {
+              active: true,
+              tier: 'premium',
+              startDate: new Date().toISOString(),
+              endDate: new Date(Date.now() + 365*24*60*60*1000).toISOString()
+            },
+            hasSubscription: true,
+            metadata: {
+              role: 'ceo',
+              permissions: ['read', 'write', 'delete', 'admin', 'ceo']
+            }
+          };
+          break;
+
+        default: // regular user
+          authPayload.payload = {
+            userId: 'test-user-001',
+            email: 'user@healthquest.com',
+            displayName: 'Test User',
+            photoURL: 'https://api.dicebear.com/7.x/avataaars/svg?seed=user',
+            token: 'test-token-user-' + Date.now(),
+            sessionId: 'session-' + Date.now(),
+            role: 'user',
+            subscription: {
+              active: false,
+              tier: 'free'
+            },
+            hasSubscription: false,
+            metadata: {
+              role: 'user',
+              permissions: ['read']
+            }
+          };
+      }
+
+      // Send auth to iframe
+      iframe.contentWindow.postMessage(authPayload, '*');
+
+      // Show status
+      status.style.display = 'block';
+      status.innerHTML = `✅ Sent authentication as <strong>${authPayload.payload.displayName}</strong> (${authPayload.payload.role})`;
+
+      console.log('Sent auth payload:', authPayload);
+    }
+
+    // Wait for iframe to load, then auto-login as admin
+    iframe.addEventListener('load', () => {
+      console.log('LumosLand iframe loaded');
+      setTimeout(() => {
+        console.log('Auto-logging in as admin...');
+        sendAuth('admin');
+      }, 1000);
+    });
+  </script>
+</body>
+</html>
