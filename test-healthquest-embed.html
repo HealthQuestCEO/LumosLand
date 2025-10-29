@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HealthQuest - LumosLand Embed Test</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 15px 30px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #667eea;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .status {
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .status.connected {
+      background: #10b981;
+      color: white;
+    }
+
+    .status.disconnected {
+      background: #ef4444;
+      color: white;
+    }
+
+    .status.waiting {
+      background: #f59e0b;
+      color: white;
+    }
+
+    .main-content {
+      flex: 1;
+      display: flex;
+      padding: 20px;
+      gap: 20px;
+    }
+
+    .sidebar {
+      width: 300px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      overflow-y: auto;
+    }
+
+    .sidebar h2 {
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: #374151;
+    }
+
+    .control-group {
+      margin-bottom: 20px;
+    }
+
+    .control-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #6b7280;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
+
+    .control-group input,
+    .control-group select {
+      width: 100%;
+      padding: 8px 12px;
+      border: 2px solid #e5e7eb;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .control-group button {
+      width: 100%;
+      padding: 10px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .control-group button:hover {
+      transform: translateY(-2px);
+    }
+
+    .control-group button:active {
+      transform: translateY(0);
+    }
+
+    .iframe-container {
+      flex: 1;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    #lumos-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .log-section {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 2px solid #e5e7eb;
+    }
+
+    .log-entry {
+      font-size: 11px;
+      font-family: 'Courier New', monospace;
+      padding: 8px;
+      margin-bottom: 5px;
+      border-radius: 4px;
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    .log-entry.sent {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .log-entry.received {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .log-entry .timestamp {
+      color: #6b7280;
+      margin-right: 8px;
+    }
+
+    .log-entry .type {
+      font-weight: bold;
+      margin-right: 8px;
+    }
+
+    .clear-log {
+      font-size: 11px;
+      padding: 4px 8px;
+      background: #ef4444;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      float: right;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">🏥 HealthQuest Platform</div>
+    <div class="user-info">
+      <span id="user-name">Test User</span>
+      <div id="connection-status" class="status waiting">Waiting...</div>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="sidebar">
+      <h2>⚙️ Controls</h2>
+
+      <div class="control-group">
+        <label>User ID</label>
+        <input type="text" id="userId" value="test-user-123" />
+      </div>
+
+      <div class="control-group">
+        <label>Email</label>
+        <input type="text" id="userEmail" value="test@healthquest.com" />
+      </div>
+
+      <div class="control-group">
+        <label>Display Name</label>
+        <input type="text" id="userName" value="Test User" />
+      </div>
+
+      <div class="control-group">
+        <button onclick="sendAuth()">🔐 Send Authentication</button>
+      </div>
+
+      <div class="control-group">
+        <button onclick="sendPing()">📡 Send Ping</button>
+      </div>
+
+      <div class="control-group">
+        <button onclick="sendLogout()">🚪 Send Logout</button>
+      </div>
+
+      <div class="log-section">
+        <h2>
+          📋 Message Log
+          <button class="clear-log" onclick="clearLog()">Clear</button>
+        </h2>
+        <div id="log" style="max-height: 400px; overflow-y: auto;"></div>
+      </div>
+    </div>
+
+    <div class="iframe-container">
+      <iframe
+        id="lumos-iframe"
+        src="http://localhost:5173"
+        allow="autoplay; fullscreen"
+      ></iframe>
+    </div>
+  </div>
+
+  <script>
+    const iframe = document.getElementById('lumos-iframe');
+    const statusEl = document.getElementById('connection-status');
+    const logEl = document.getElementById('log');
+    let isConnected = false;
+    let messageCount = 0;
+
+    // Update status display
+    function updateStatus(status, text) {
+      statusEl.className = `status ${status}`;
+      statusEl.textContent = text;
+    }
+
+    // Log message
+    function log(direction, type, payload) {
+      messageCount++;
+      const entry = document.createElement('div');
+      entry.className = `log-entry ${direction}`;
+
+      const timestamp = new Date().toLocaleTimeString();
+      const payloadStr = JSON.stringify(payload, null, 2);
+
+      entry.innerHTML = `
+        <span class="timestamp">${timestamp}</span>
+        <span class="type">${direction === 'sent' ? '→' : '←'} ${type}</span>
+        <br>${payloadStr}
+      `;
+
+      logEl.insertBefore(entry, logEl.firstChild);
+
+      // Keep only last 50 messages
+      while (logEl.children.length > 50) {
+        logEl.removeChild(logEl.lastChild);
+      }
+    }
+
+    // Clear log
+    function clearLog() {
+      logEl.innerHTML = '';
+      messageCount = 0;
+    }
+
+    // Send authentication
+    function sendAuth() {
+      const payload = {
+        userId: document.getElementById('userId').value,
+        email: document.getElementById('userEmail').value,
+        displayName: document.getElementById('userName').value,
+        photoURL: 'https://ui-avatars.com/api/?name=Test+User',
+        token: 'test-jwt-token-' + Date.now(),
+        sessionId: 'session-' + Date.now(),
+        metadata: {
+          role: 'student',
+          grade: 5,
+          testMode: true
+        }
+      };
+
+      iframe.contentWindow.postMessage({
+        type: 'HEALTHQUEST_AUTH',
+        payload: payload
+      }, '*');
+
+      log('sent', 'HEALTHQUEST_AUTH', payload);
+      updateStatus('waiting', 'Auth Sent...');
+    }
+
+    // Send ping
+    function sendPing() {
+      iframe.contentWindow.postMessage({
+        type: 'HEALTHQUEST_PING',
+        payload: {}
+      }, '*');
+
+      log('sent', 'HEALTHQUEST_PING', {});
+    }
+
+    // Send logout
+    function sendLogout() {
+      iframe.contentWindow.postMessage({
+        type: 'HEALTHQUEST_LOGOUT',
+        payload: {}
+      }, '*');
+
+      log('sent', 'HEALTHQUEST_LOGOUT', {});
+      isConnected = false;
+      updateStatus('disconnected', 'Disconnected');
+    }
+
+    // Listen for messages from LumosLand
+    window.addEventListener('message', (event) => {
+      // In production, verify origin:
+      // if (event.origin !== 'https://your-lumos-domain.com') return;
+
+      const { type, payload } = event.data;
+
+      if (!type) return; // Ignore non-protocol messages
+
+      log('received', type, payload);
+
+      switch (type) {
+        case 'LUMOS_REQUEST_AUTH':
+          console.log('LumosLand requesting auth, sending automatically...');
+          updateStatus('waiting', 'Auth Requested');
+          setTimeout(sendAuth, 500);
+          break;
+
+        case 'LUMOS_AUTH_ACK':
+          console.log('LumosLand authenticated successfully!');
+          isConnected = true;
+          updateStatus('connected', 'Connected ✓');
+          break;
+
+        case 'LUMOS_LESSON_COMPLETE':
+          console.log('Lesson completed:', payload);
+          // Here you would save to your backend
+          alert(`Lesson completed! Score: ${payload.score}`);
+          break;
+
+        case 'LUMOS_REWARDS_EARNED':
+          console.log('Rewards earned:', payload);
+          // Here you would update user rewards
+          alert(`Rewards: ${payload.xpEarned} XP, ${payload.coinsEarned} Coins`);
+          break;
+
+        case 'LUMOS_PROGRESS_UPDATE':
+          console.log('Progress update:', payload);
+          // Here you would sync progress
+          break;
+
+        case 'LUMOS_PONG':
+          console.log('Pong received from LumosLand');
+          break;
+
+        default:
+          console.log('Unknown message type:', type);
+      }
+    });
+
+    // Auto-send auth when iframe loads
+    iframe.addEventListener('load', () => {
+      console.log('Iframe loaded, waiting for auth request...');
+      updateStatus('waiting', 'Waiting for Auth Request');
+
+      // Also try sending auth after a delay as backup
+      setTimeout(() => {
+        if (!isConnected) {
+          console.log('No auth request received, sending auth proactively...');
+          sendAuth();
+        }
+      }, 3000);
+    });
+
+    // Auto-ping every 30 seconds
+    setInterval(() => {
+      if (isConnected) {
+        sendPing();
+      }
+    }, 30000);
+
+    // Update user name in header
+    document.getElementById('userName').addEventListener('input', (e) => {
+      document.getElementById('user-name').textContent = e.target.value;
+    });
+  </script>
+</body>
+</html>

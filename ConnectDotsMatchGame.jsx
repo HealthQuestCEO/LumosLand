@@ -3,6 +3,7 @@ import React, { useState, useMemo, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import { normalizeMatchingData, validateMatchingData } from "./MatchGameDataAdapter";
 
 // Color palette
 const APP_COLORS = {
@@ -18,79 +19,22 @@ const APP_COLORS = {
 
 const DOT_OFFSET = 4;
 
-/**
- * Helper to extract text from nested objects
- */
-function extractText(value) {
-  if (typeof value === 'string') return value;
-  if (typeof value === 'number') return String(value);
-  if (!value) return '';
-  
-  if (typeof value === 'object') {
-    if (value.ques || value.ans || value.question || value.answer) {
-      return extractText(value.ques || value.ans || value.question || value.answer);
-    }
-    const textProps = ['text', 'displayText', 'value', 'content', 'label'];
-    for (const prop of textProps) {
-      if (value[prop]) return extractText(value[prop]);
-    }
-  }
-  
-  return '';
-}
-
-/**
- * Parse matching pairs from lesson data
- */
-function parseMatchingPairs(options) {
-  if (!Array.isArray(options) || options.length === 0) {
-    return [];
-  }
-  
-  const firstOption = options[0];
-  
-  // Format 1: Base44 String Format
-  if (firstOption?.matching_answer && typeof firstOption.matching_answer === 'string') {
-    return options.map((option, index) => ({
-      id: `pair_${index}`,
-      left: extractText(option.ans),
-      right: extractText(option.matching_answer)
-    })).filter(pair => pair.left && pair.right);
-  }
-  
-  // Format 2: HealthQuest Object Format
-  if (firstOption?.matching_answer?.answerId) {
-    const pairsMap = {};
-    
-    options.forEach((option) => {
-      if (!option.matching_answer?.answerId) return;
-      
-      const answerId = option.matching_answer.answerId;
-      const group = option.matching_answer.group;
-      const text = extractText(option.ans);
-      
-      if (!pairsMap[answerId]) {
-        pairsMap[answerId] = { id: answerId };
-      }
-      
-      if (group === 'left') {
-        pairsMap[answerId].left = text;
-      } else if (group === 'right') {
-        pairsMap[answerId].right = text;
-      }
-    });
-    
-    return Object.values(pairsMap).filter(pair => pair.left && pair.right);
-  }
-  
-  return [];
-}
-
 export default function ConnectDotsMatchGame({ lessonData, gameConfig, onComplete, onExit }) {
-  const currentQ = lessonData?.questions?.[0] || lessonData;
-  const pairs = useMemo(() => parseMatchingPairs(currentQ?.options || []), [currentQ]);
-  // Use currentQ.question for consistency with the outline's question display
-  const questionText = currentQ?.questionText || currentQ?.question || "Match the pairs";
+  // Normalize data using universal adapter
+  const normalizedData = useMemo(() => {
+    const normalized = normalizeMatchingData(lessonData);
+    const validation = validateMatchingData(normalized);
+
+    if (!validation.valid) {
+      console.error('[ConnectDots] Invalid matching data:', validation.error);
+    }
+
+    return normalized;
+  }, [lessonData]);
+
+  const pairs = normalizedData.pairs;
+  const metadata = normalizedData.metadata;
+  const questionText = metadata.question || "Match the pairs!";
   
   const [selected, setSelected] = useState(null);
   const [matches, setMatches] = useState({});
@@ -192,12 +136,14 @@ export default function ConnectDotsMatchGame({ lessonData, gameConfig, onComplet
   }, [matches, shuffledLeft, shuffledRight]);
 
   if (pairs.length === 0) {
+    const validation = validateMatchingData(normalizedData);
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 to-orange-50 p-4">
         <div className="bg-white rounded-3xl p-8 shadow-2xl max-w-md text-center">
           <div className="text-6xl mb-4">⚠️</div>
           <h2 className="text-2xl font-bold text-red-600 mb-4">No Matching Pairs Found</h2>
-          <p className="text-gray-600 mb-4">Please check the lesson data format.</p>
+          <p className="text-gray-600 mb-4">{validation.error || 'Please check the lesson data format.'}</p>
+          <p className="text-sm text-gray-500 mb-4">Detected format: {normalizedData.format}</p>
           <button onClick={onExit} className="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600">
             Exit
           </button>
@@ -252,8 +198,8 @@ export default function ConnectDotsMatchGame({ lessonData, gameConfig, onComplet
       onComplete({
         correctAnswers: pairs.length,
         totalQuestions: pairs.length,
-        coinsEarned: lessonData.coins_reward || 50,
-        xpEarned: lessonData.xp_reward || 50
+        coinsEarned: metadata.coinsReward || 50,
+        xpEarned: metadata.xpReward || 50
       });
     }, 2000);
   };
@@ -420,7 +366,7 @@ export default function ConnectDotsMatchGame({ lessonData, gameConfig, onComplet
           style={{ border: `4px solid ${APP_COLORS.primaryBlue}` }}
         >
           <h2 className="text-2xl md:text-3xl font-bold text-center" style={{ color: APP_COLORS.darkText }}>
-            {currentQ?.question || "Match the pairs!"}
+            {questionText}
           </h2>
           <p className="text-center mt-2" style={{ color: APP_COLORS.lightText }}>
             Tap one box from each column to match the pairs!
