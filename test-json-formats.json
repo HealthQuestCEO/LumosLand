@@ -1,0 +1,198 @@
+{
+  "description": "Test JSON formats for LumosLand match games - ALL THESE WORK!",
+  "test_cases": [
+    {
+      "name": "Format 1: HealthQuest Object Format (CURRENT - RECOMMENDED)",
+      "lesson": {
+        "type": "match",
+        "game_style": "bubble_pop",
+        "question": "Match the body parts with senses",
+        "options": [
+          {
+            "ans": "Eyes",
+            "matching_answer": {
+              "answerId": "match_0",
+              "group": "left"
+            }
+          },
+          {
+            "ans": "Sight",
+            "matching_answer": {
+              "answerId": "match_0",
+              "group": "right"
+            }
+          },
+          {
+            "ans": "Ears",
+            "matching_answer": {
+              "answerId": "match_1",
+              "group": "left"
+            }
+          },
+          {
+            "ans": "Hearing",
+            "matching_answer": {
+              "answerId": "match_1",
+              "group": "right"
+            }
+          },
+          {
+            "ans": "Nose",
+            "matching_answer": {
+              "answerId": "match_2",
+              "group": "left"
+            }
+          },
+          {
+            "ans": "Smell",
+            "matching_answer": {
+              "answerId": "match_2",
+              "group": "right"
+            }
+          },
+          {
+            "ans": "Tongue",
+            "matching_answer": {
+              "answerId": "match_3",
+              "group": "left"
+            }
+          },
+          {
+            "ans": "Taste",
+            "matching_answer": {
+              "answerId": "match_3",
+              "group": "right"
+            }
+          },
+          {
+            "ans": "Skin",
+            "matching_answer": {
+              "answerId": "match_4",
+              "group": "left"
+            }
+          },
+          {
+            "ans": "Touch",
+            "matching_answer": {
+              "answerId": "match_4",
+              "group": "right"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Format 2: Base44 String Format (LEGACY - STILL WORKS)",
+      "lesson": {
+        "type": "match",
+        "game_style": "sliding_match",
+        "question": "Match the colors",
+        "options": [
+          {
+            "ans": "Red",
+            "matching_answer": "Apple"
+          },
+          {
+            "ans": "Yellow",
+            "matching_answer": "Banana"
+          },
+          {
+            "ans": "Orange",
+            "matching_answer": "Orange Fruit"
+          },
+          {
+            "ans": "Green",
+            "matching_answer": "Grass"
+          },
+          {
+            "ans": "Blue",
+            "matching_answer": "Sky"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Format 3: Simple Pair Format",
+      "lesson": {
+        "type": "match",
+        "game_style": "connect_dots",
+        "question": "Match the animals with sounds",
+        "options": [
+          {"question": "Dog", "answer": "Bark"},
+          {"question": "Cat", "answer": "Meow"},
+          {"question": "Cow", "answer": "Moo"},
+          {"question": "Duck", "answer": "Quack"},
+          {"question": "Lion", "answer": "Roar"}
+        ]
+      }
+    },
+    {
+      "name": "Format 4: Direct Pair Format",
+      "lesson": {
+        "type": "match",
+        "game_style": "bubble_pop",
+        "question": "Match the countries with capitals",
+        "options": [
+          {"left": "USA", "right": "Washington DC"},
+          {"left": "UK", "right": "London"},
+          {"left": "France", "right": "Paris"},
+          {"left": "Japan", "right": "Tokyo"},
+          {"left": "Egypt", "right": "Cairo"}
+        ]
+      }
+    },
+    {
+      "name": "Format 5: Nested Object Format (COMPLEX - STILL WORKS!)",
+      "lesson": {
+        "type": "match",
+        "game_style": "sliding_match",
+        "question": "Match the items",
+        "options": [
+          {
+            "ques": {"text": "Hot"},
+            "ans": {"text": "Cold"}
+          },
+          {
+            "ques": {"text": "Day"},
+            "ans": {"text": "Night"}
+          },
+          {
+            "ques": {"text": "Up"},
+            "ans": {"text": "Down"}
+          },
+          {
+            "ques": {"text": "Left"},
+            "ans": {"text": "Right"}
+          },
+          {
+            "ques": {"text": "Big"},
+            "ans": {"text": "Small"}
+          }
+        ]
+      }
+    }
+  ],
+  "notes": {
+    "important": "ALL 5 formats work automatically! MatchGameDataAdapter detects the format and extracts data correctly.",
+    "recommendation": "Use Format 1 (HealthQuest Object Format) for new lessons - it's the most flexible and explicit.",
+    "validation": "The adapter validates that each pair has both left and right values before creating the game.",
+    "error_handling": "Invalid pairs are filtered out automatically and logged to console.",
+    "game_styles": {
+      "bubble_pop": "Click bubbles to match pairs",
+      "sliding_match": "Drag right items to left drop zones",
+      "connect_dots": "Draw lines between matching items"
+    },
+    "required_fields": {
+      "type": "Must be 'match' for matching games",
+      "game_style": "One of: bubble_pop, sliding_match, connect_dots",
+      "question": "Optional - defaults to 'Match the pairs!'",
+      "options": "Array of 10 items (5 pairs)"
+    },
+    "console_logs": [
+      "✅ [MatchGameDataAdapter] Detected format: healthquest-object",
+      "✅ [MatchGameDataAdapter] Normalized 5 pairs successfully",
+      "⚠️ [MatchGameDataAdapter] Filtered out 2 incomplete pairs",
+      "❌ [MatchGameDataAdapter] Error: Invalid format - missing options array"
+    ]
+  }
+}
